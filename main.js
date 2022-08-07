@@ -1,23 +1,30 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import { setupCounter } from './counter.js'
+import './style.css';
+import * as THREE from 'three';
+import { renderer, updateRenderer } from './renderer';
+import { scene } from './scene';
+import { camera, updateCamera } from './camera';
+import { configs } from './configurations';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const { sizes, renderer: rendererConfigs } = configs;
 
-setupCounter(document.querySelector('#counter'))
+const geometry = new THREE.SphereBufferGeometry(1, 16, 16);
+const material = new THREE.MeshBasicMaterial();
+const sphere = new THREE.Mesh(geometry, material);
+
+scene.add(sphere);
+
+renderer.render(scene, camera);
+
+window.addEventListener('resize', () => {
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+  rendererConfigs.pixelRatio = window.devicePixelRatio;
+  updateCamera(sizes.width, sizes.height);
+  updateRenderer(sizes.width, sizes.height, rendererConfigs.pixelRatio);
+  renderer.render(scene, camera);
+});
+
+window.addEventListener('dblclick', () => {
+  if (!document.fullscreenElement) renderer.domElement.requestFullscreen();
+  else document.exitFullscreen();
+});
