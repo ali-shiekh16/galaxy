@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import { scene } from './scene';
 
 const params = {
-  count: 1000,
+  count: 7000,
   size: 0.05,
   radius: 5,
   branches: 3,
   branchesCurveFactor: 1.5,
-  randomnessFactor: 0.5,
+  randmonessPower: 3.6,
 };
 
 let geometry = null;
@@ -31,9 +31,15 @@ function createGalaxy() {
     const branchesRadius = Math.random() * params.radius;
     const curveFactor = branchesRadius * params.branchesCurveFactor;
 
-    const randmonessX = Math.random() * params.randomnessFactor;
-    const randmonessY = Math.random() * params.randomnessFactor;
-    const randmonessZ = Math.random() * params.randomnessFactor;
+    const randmonessX =
+      Math.pow(Math.random(), params.randmonessPower) *
+      (Math.random() < 0.5 ? 1 : -1);
+    const randmonessY =
+      Math.pow(Math.random(), params.randmonessPower) *
+      (Math.random() < 0.5 ? 1 : -1);
+    const randmonessZ =
+      Math.pow(Math.random(), params.randmonessPower) *
+      (Math.random() < 0.5 ? 1 : -1);
 
     // Position X
     positions[i3] =

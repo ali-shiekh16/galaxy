@@ -78,8 +78,9 @@ gui
   .onFinishChange(createGalaxy);
 
 gui
-  .add(galaxyParams, 'randomnessFactor')
-  .min(0.1)
+  .add(galaxyParams, 'randmonessPower')
+  .min(2)
   .max(5)
   .step(0.01)
-  .onFinishChange(createGalaxy);
+  .onFinishChange(createGalaxy)
+  .name('Randmoness');
