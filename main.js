@@ -69,3 +69,17 @@ gui
   .max(10)
   .step(1)
   .onFinishChange(createGalaxy);
+
+gui
+  .add(galaxyParams, 'branchesCurveFactor')
+  .min(0.1)
+  .max(5)
+  .step(0.01)
+  .onFinishChange(createGalaxy);
+
+gui
+  .add(galaxyParams, 'randomnessFactor')
+  .min(0.1)
+  .max(5)
+  .step(0.01)
+  .onFinishChange(createGalaxy);
