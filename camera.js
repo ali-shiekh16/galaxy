@@ -10,7 +10,7 @@ const camera = new PerspectiveCamera(
   cameraConfigs.far
 );
 
-camera.position.set(0, 0, 5);
+camera.position.set(0, 3, 5);
 
 function updateCamera(width, height) {
   camera.aspect = width / height;
