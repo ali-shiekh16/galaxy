@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { camera } from './camera';
 import { scene } from './scene';
 
 const params = {
@@ -8,10 +9,11 @@ const params = {
   branches: 3,
   branchesCurveFactor: 1.5,
   randmonessPower: 3.6,
+  innerColor: '#ff6030',
+  outerColor: '#1b3984',
 };
 
 let geometry = null;
-let positions = null;
 let material = null;
 let stars = null;
 
@@ -23,7 +25,8 @@ function createGalaxy() {
   }
   // GEOMETRY
   geometry = new THREE.BufferGeometry();
-  positions = new Float32Array(params.count * 3);
+  const positions = new Float32Array(params.count * 3);
+  const colors = new Float32Array(params.count * 3);
   for (let i = 0; i < params.count; i++) {
     const i3 = i * 3;
 
@@ -51,9 +54,20 @@ function createGalaxy() {
 
     // Position Y (For Spread)
     positions[i3 + 1] = randmonessY;
+
+    // COLORS
+    const innerColor = new THREE.Color(params.innerColor);
+    const outerColor = new THREE.Color(params.outerColor);
+
+    const alpha = branchesRadius / params.radius;
+    const mixedColor = innerColor.clone().lerp(outerColor, alpha);
+    colors[i3] = mixedColor.r;
+    colors[i3 + 1] = mixedColor.g;
+    colors[i3 + 2] = mixedColor.b;
   }
 
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
   // MATERIAL
   material = new THREE.PointsMaterial({
@@ -61,6 +75,7 @@ function createGalaxy() {
     sizeAttenuation: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
+    vertexColors: true,
   });
 
   stars = new THREE.Points(geometry, material);

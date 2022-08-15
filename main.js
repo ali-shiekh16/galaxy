@@ -84,3 +84,7 @@ gui
   .step(0.01)
   .onFinishChange(createGalaxy)
   .name('Randmoness');
+
+gui.addColor(galaxyParams, 'innerColor').onFinishChange(createGalaxy);
+
+gui.addColor(galaxyParams, 'outerColor').onFinishChange(createGalaxy);
